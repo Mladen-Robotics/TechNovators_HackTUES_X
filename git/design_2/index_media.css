@@ -1,0 +1,203 @@
+@media only screen and (max-width: 820px) {
+    #content {
+        margin-left: 15%;
+        /* overflow-x: hidden; */
+
+    }
+
+    #name {
+        display: none;
+    }
+
+    #header {
+        height: 60px;
+    }
+
+    #fonts {
+        right: 20px;
+    }
+
+    #fonts {
+        right: -10px;
+    }
+
+    #title {
+        right: 25%;
+    }
+
+    #settings {
+        margin-right: 80px;
+    }
+}
+
+
+@media only screen and (max-width: 510px) {
+    #content {
+        margin-left: 80px;
+    }
+
+    #title {
+        display: none;
+    }
+
+    #settings {
+        display: flex;
+        position: absolute;
+        right: 50%;
+        height: 30px;
+    }
+
+    #fonts {
+        bottom: 20px;
+    }
+
+    #theme {
+        margin-right: -30px;
+    }
+
+
+    #white_theme {
+        background-image: linear-gradient(to right, #53DF3C 50%, #fff 50%, #fff);
+        top: 0px;
+        transition: 0.2s;
+    }
+
+    #black_theme {
+        background-image: linear-gradient(to right, #1B1B1B 50%, #005703 50%, #005703);
+        top: 0px;
+        transition: 0.2s;
+
+    }
+
+    #pink_theme {
+        background-image: linear-gradient(to right, #ED0072 50%, #FA8C7F 50%, #FA8C7F);
+        top: 0px;
+        transition: 0.2s;
+    }
+
+
+
+
+
+
+    #theme.theme_open #white_theme {
+        top: 50px;
+        right: 0;
+    }
+
+    #theme.theme_open #black_theme {
+        top: 100px;
+        right: 0;
+    }
+
+    #theme.theme_open #pink_theme {
+        top: 150px;
+        right: 0;
+    }
+
+
+
+
+
+
+    #ibm_font {
+        top: 0;
+        right: 10px;
+    }
+
+    #inconsolata_font {
+        top: 0;
+        right: 10px;
+    }
+
+    #irish_font {
+        top: 0;
+        right: 10px;
+    }
+
+
+
+    #fonts.font_open #ibm_font {
+        top: 50px;
+        right: 10px;
+    }
+
+
+    #fonts.font_open #inconsolata_font {
+        top: 100px;
+        right: 10px;
+    }
+
+
+    #fonts.font_open #irish_font {
+        top: 150px;
+        right: 10px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 920px) {
+    #content {
+        margin-left: 90px;
+    }
+}
+
+@media only screen and (min-width: 1010px) {
+    #content {
+        margin-left: 90px;
+    }
+
+    #user_prompt_outline {
+        /* position: absolute; */
+        left: 100px;
+        /* background-color: red; */
+        /* z-index; */
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    #user_prompt_outline {
+        right: 10px;
+        /* width: 260px; */
+    }
+
+    #user_prompt {
+        right: 5px;
+    }
+
+    #send_icon {
+        right: 10px;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    #user_prompt_outline {
+        right: 5px;
+        /* width: 260px; */
+    }
+
+    #user_prompt {
+        /* right: 0 !important; */
+        /* width: 80%; */
+        /* min-width: none !important; */
+    }
+
+    #send_icon {
+        right: 20px;
+    }
+}
