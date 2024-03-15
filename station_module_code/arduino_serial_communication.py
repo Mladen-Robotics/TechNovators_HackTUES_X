@@ -14,6 +14,13 @@
 5. Functioin read_data(station_port) - this function returns the data read or False if data wasn't read successfully.
 '''
 
+'''
+error codes:
+
+
+-2 = Port is disconnected
+'''
+
 from time import sleep
 import serial.tools.list_ports 
 import threading
@@ -27,6 +34,7 @@ PORT_CHECK_TIME_INTERVAL = 0.4
 
 class PortDisconnected(Exception):
     pass
+
 
 def search_for_available_station_ports():
     try:
@@ -47,9 +55,8 @@ def search_for_available_station_ports():
         else:
             return False
     except AttributeError:
-        print("Port disconnected!")
-        print("Terminating program...")
-        _exit()
+        return -2
+        # _exit()
 
 def connect_to_station(device_port):
     try:
@@ -57,7 +64,7 @@ def connect_to_station(device_port):
         port_thread = threading.Thread(target=check_is_port_connected,args=(device_port,PORT_CHECK_TIME_INTERVAL))
         port_thread.daemon = True
         port_thread.start()
-        print("The port is: {}".format(port))
+        # print("The port is: {}".format(port))
         return port
     # except serial.SerialException:
     #     return -1
@@ -73,7 +80,7 @@ def check_is_port_connected(device_port,time_interval):
             print(device_port)
             available_ports = search_for_available_station_ports()
             if available_ports == False or device_port not in available_ports:
-                print("Port disconnected!")
+                # print("Port disconnected!")
                 raise PortDisconnected
             # for port in device_port:
             #     if port not in available_ports:
@@ -81,8 +88,9 @@ def check_is_port_connected(device_port,time_interval):
                 
             sleep(time_interval)
     except PortDisconnected:
-        print("Terminating program...")
-        _exit(0)
+        # print("Terminating program...")
+        # _exit(0)
+        return -1
 
 def write_data_port(text_data,station_port):
     encoded_data = text_data.encode('utf-8')
@@ -99,37 +107,43 @@ def read_data_port(station_port):
         while station_port.in_waiting:
             received_data += station_port.read().decode('utf-8')
             sleep(0.1)
-        print("Data: " + received_data)
+        # print("Data: " + received_data)
     return received_data
 
 def write_to_station(text_data,station_port):
     if write_data_port(text_data,station_port) == True:
-        print("Data sent successfully!")
+        # print("Data sent successfully!")
+        sleep(0.7)
+        received_data = read_data_port(station_port)
+        # print(received_data)
+        if received_data == text_data:
+            # print("Data recieved successfullly!!:)")
+            return True
+        else:
+            # print("Data was NOT RECEIVED SUCCESSFULLY!")
+            return False
+        # return True
     else:
-        print("Data was NOT sent successfully.")
-    sleep(0.7)
-    received_data = read_data_port(station_port)
-    print(received_data)
-    if received_data == text_data:
-        print("Data recieved successfullly!!:)")
-    else:
-        print("Data was NOT RECEIVED SUCCESSFULLY!")
+        # print("Data was NOT sent successfully.")
+        return False
+    
 
 def read_from_station(station_port):
     if write_data_port("R",station_port):
-        print("Data was sent successfully!")
+        # print("Data was sent successfully!")
+        sleep(1)
+        received_data = read_data_port(station_port)[1:]
+        print("Received data: " + received_data)
+        received_data = received_data.split(';')
+        temperature = float(received_data[0][1:])
+        humidity = float(received_data[1][1:])
+        print("Temp: " + str(temperature))
+        print("Hum: " + str(humidity))
+        return received_data
     else:
-        print("Data was NOT sent successfully!")
+        # print("Data was NOT sent successfully!")
         return False
-    sleep(1)
-    received_data = read_data_port(station_port)[1:]
-    print("Received data: " + received_data)
-    received_data = received_data.split(';')
-    temperature = float(received_data[0][1:])
-    humidity = float(received_data[1][1:])
-    print("Temp: " + str(temperature))
-    print("Hum: " + str(humidity))
-    return received_data
+        
 
 # def write_measurments(text_data,station_port):
 #     encoded_data = text_data.encode('utf-8')
@@ -151,32 +165,36 @@ def read_from_station(station_port):
 #     else:
 #         print("Data wasn't sent correctly!!")
 
-def read_data(station_port):
-    received_data = ""
-    if station_port.in_waiting:
-        while station_port.in_waiting:
-            received_data += station_port.read().decode('utf-8')
-        print("Data: " + received_data)
-    return received_data
+# def read_data(station_port):
+#     received_data = ""
+#     if station_port.in_waiting:
+#         while station_port.in_waiting:
+#             received_data += station_port.read().decode('utf-8')
+#         print("Data: " + received_data)
+#     return received_data
 
 
-available_station_ports = search_for_available_station_ports()
-if available_station_ports == False:
-    print("No available arduino ports found!")
-    exit()
+# print("Working!")
 
-station_port = connect_to_station(available_station_ports[0])
-if station_port == -1:
-    print("device can not be found or can not be configured!")
-elif station_port == -2:
-    print("parameter are out of range, e.g. baud rate, data bits!")
-else:
-    print("SUCCESSFULLY CONNECTED TO PORT {}".format(station_port.port))
+if __name__ == "__main__":
+    available_station_ports = search_for_available_station_ports()
+    if available_station_ports == False:
+        print("No available arduino ports found!")
+        exit()
 
-print("Unplug it!")
-sleep(2)
-write_to_station("Test",station_port)
-read_from_station(station_port)
+    station_port = connect_to_station(available_station_ports[0])
+    if station_port == -1:
+        print("device can not be found or can not be configured!")
+    elif station_port == -2:
+        print("parameter are out of range, e.g. baud rate, data bits!")
+    else:
+        print("SUCCESSFULLY CONNECTED TO PORT {}".format(station_port.port))
+
+    print("Unplug it!")
+    sleep(2)
+    write_to_station("Test",station_port)
+    read_from_station(station_port)
+# Debug prompt
 # write_data("R",station_port)
 # print(f"Received data: {read_data(station_port,option=2)}")
 # while True:
