@@ -1,14 +1,11 @@
 from django.urls import path
-
+from .views import  chatbot_view
 from . import views
 
 urlpatterns = [
     path("math", views.math_AI, name="math"),
-    path("ip", views.IP_AI, name="math"),
+    path("ip", views.IP_AI, name="ip"),
     path("general", views.general_AI, name="general"),
     path("", views.index, name="index"),
-    path("<int:question_id>/", views.detail, name="detail"),
-    path("<int:question_id>/results/", views.results, name="results"),
-    path("<int:question_id>/vote/", views.vote, name="vote"),
-
+    path('chatbot/', chatbot_view, name='chatbot_view'),    
 ]

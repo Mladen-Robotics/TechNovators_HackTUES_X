@@ -3,36 +3,43 @@ from django.template import loader
 from .models import Question
 from django.http import Http404
 from django.shortcuts import render
-from .models import Question
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def chatbot_view(request):
+    if request.method == 'POST':
+        user_message = request.POST.get('message', '')
+        # Process user_message and generate bot response
+        bot_response = generate_bot_response(user_message)
+        return JsonResponse({'message': bot_response})
+    else:
+        return render(request, 'chatbot.html')  # Return the HTML template
+
+def generate_bot_response(user_message):
+    # Replace this with your actual bot logic
+    responses = [
+        "Hello! How can I assist you today?",
+        "I'm sorry, I didn't understand that.",
+        "Please rephrase your question.",
+        "Let me find that information for you.",
+        "How can I help you further?",
+    ]
+    return random.choice(responses)
 
 def index(request):
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    template = loader.get_template("polls/index.html")
-    context = {
-        "latest_question_list": latest_question_list,
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse("Hello! If you want to use Buddy for Study type /polls/math (for Math AI); /polls/ip (for IP calculating AI); polls/genera l(for General AI)")
 
 def math_AI(request):
-    return HttpResponse("You are now using Math AI")
+    myvariable = "You are using Math AI"
+    context={'myvariable' : myvariable}
+    return render(request, "base.html", context)
 def IP_AI(request):
-    return HttpResponse("You are now using IP AI")
+    ipvar = 'Something'
+    context1={'ipvar': ipvar}
+    return render(request, "ip.html", context1)
 def general_AI(request):
-    return HttpResponse("You are now using General AI")
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
-
-
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
-
-
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
-def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, "polls/detail.html", {"question": question})
+    genvar = 'Hi'
+    context2 = {'genvar': genvar}
+    return render(request, "gen.html", context2)
