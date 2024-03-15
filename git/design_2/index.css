@@ -1,0 +1,551 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@100;200;300;400;500;600;700&family=Inconsolata:wdth,wght@50..200,200..900&family=Irish+Grover&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #fff;
+    --nav-color: #FFC555;
+    --front-name-color: #53DF3C;
+    --bottom-name-color: #269560;
+    --font-family: "IBM Plex Sans Hebrew";
+    --nav-second-color: #53DF3C;
+    --nav-third-color: #D9D9D9;
+    --user-prompt-placeholder: #757575;
+    --text-color: black;
+}
+
+body {
+    width: 100%;
+    background-color: var(--bg-color);
+    height: 100dvh;
+    display: flex;
+    /* position: relative; */
+    font-family: var(--font-family);
+}
+
+nav {
+    width: clamp(40px, 15%, 60px);
+    height: 100dvh;
+    background-color: var(--nav-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#nav_outline {
+    width: clamp(40px, 15%, 60px);
+    height: 100dvh;
+    /* background-color: #fff; */
+    border: 3px solid var(--nav-second-color);
+    position: fixed;
+    left: 10px;
+    top: 0px;
+    border-radius: 50px;
+}
+
+#content {
+    width: 100%;
+    position: relative;
+    margin-left: 10%;
+    height: 90%;
+    overflow: scroll;
+    margin-bottom: 80px;
+}
+
+#logo_wrapper {
+    width: 100%;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    width: 80%;
+    border-radius: 50%;
+    clip-path: circle(40%);
+}
+
+#tools_list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5vh;
+}
+
+#profile {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#profile_pic {
+    width: 70%;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#exit_btn {
+    width: 120%;
+    cursor: pointer;
+}
+
+.tool {
+    width: 40px;
+    aspect-ratio: 1;
+    background-color: green;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+}
+
+.tool img {
+    width: 65%;
+}
+
+#general_btn {
+    background-color: #14D93F;
+    border: 3px solid #019C11;
+    transition: 0.2s;
+}
+
+#general_btn:hover {
+    background-color: #019C11;
+}
+
+#math_btn {
+    background-color: #FF0000;
+    border: 3px solid #FFA95A;
+    transition: 0.2s;
+}
+
+#math_btn:hover {
+    background-color: #FFA95A;
+}
+
+#classroom_btn {
+    background-color: #8195FF;
+    border: 3px solid #675AFF;
+    transition: 0.2s;
+}
+
+#classroom_btn:hover {
+    background-color: #675AFF;
+}
+
+
+.active img {
+    filter: drop-shadow(2px 1px 2px black);
+}
+
+.active {
+    box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------- */
+
+#header {
+    width: 100%;
+    height: 60px;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px 20px 10px;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    /* background-color: red; */
+    /* left: 0; */
+}
+
+#header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background-image: linear-gradient(to bottom, var(--bg-color), transparent);
+    left: 0;
+    bottom: -38px;
+}
+
+#header img {
+    width: clamp(150px, 20vw, 200px);
+    transform: translateX(-50%);
+}
+
+#name {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Irish Grover", system-ui;
+    color: var(--front-name-color);
+    text-shadow: 2px 0 #269560;
+}
+
+#settings {
+    /* position: absolute; */
+    right: 80px;
+    /* background-color: green; */
+
+}
+
+#title {
+    position: absolute;
+    right: 30vw;
+    top: 10px;
+    /* left: 0%; */
+    z-index: 1;
+    width: clamp(140px, 25%, 150px) !important;
+}
+
+#theme {
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    /* background-color: green; */
+}
+
+.theme-color {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: red;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: none;
+    transition: 0.2s;
+}
+
+#active_theme {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #53DF3C 50%, #fff 50%, #fff);
+    border: 3px solid #FFA800;
+    cursor: pointer;
+    z-index: 1;
+    /* right: 0px; */
+}
+
+#white_theme {
+    background-image: linear-gradient(to right, #53DF3C 50%, #fff 50%, #fff);
+    right: 0px;
+    transition: 0.2s;
+}
+
+#black_theme {
+    background-image: linear-gradient(to right, #1B1B1B 50%, #005703 50%, #005703);
+    right: 0px;
+    transition: 0.2s;
+
+}
+
+#pink_theme {
+    background-image: linear-gradient(to right, #ED0072 50%, #FA8C7F 50%, #FA8C7F);
+    right: 0px;
+    transition: 0.2s;
+}
+
+#theme.theme_open #white_theme {
+    right: 50px;
+    transition: 0.2s;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+#theme.theme_open #black_theme {
+    right: 100px;
+    transition: 0.2s;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+#theme.theme_open #pink_theme {
+    right: 150px;
+    transition: 0.2s;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+#fonts {
+    margin-right: 10px;
+    display: flex;
+    position: absolute;
+    right: -10px;
+    bottom: 25px;
+    background-color: green;
+    z-index: 1;
+}
+
+#ibm_font {
+    font-family: "IBM Plex Sans Hebrew", sans-serif;
+}
+
+#inconsolata_font {
+    font-family: "Inconsolata", monospace;
+}
+
+#irish_font {
+    font-family: "Irish Grover", system-ui;
+}
+
+#active_font {
+    font-family: "IBM Plex Sans Hebrew", sans-serif;
+    width: 40px;
+    height: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    color: #000000;
+    border: 2px solid rgb(78, 78, 78);
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+}
+
+.font {
+    width: 40px;
+    height: 20px;
+    background-color: rgb(78, 78, 78);
+    border-radius: 50px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    color: #fff;
+    position: absolute;
+    cursor: pointer;
+    right: 100px;
+    /* right: 100px; */
+}
+
+.font p {
+    pointer-events: none;
+}
+
+#ibm_font {
+    right: 10px;
+    transition: 0.2s;
+}
+
+#inconsolata_font {
+    right: 10px;
+    transition: 0.2s;
+}
+
+#irish_font {
+    right: 10px;
+    transition: 0.2s;
+}
+
+
+#fonts.font_open #ibm_font {
+    right: 60px;
+}
+
+
+#fonts.font_open #inconsolata_font {
+    right: 110px;
+}
+
+
+#fonts.font_open #irish_font {
+    right: 160px;
+}
+
+
+/* ------------------------------------------------------------------ */
+
+#user_prompt {
+    position: fixed;
+    bottom: 20px;
+    width: 80%;
+    height: 45px;
+    background-color: var(--bg-color);
+    border-radius: 50px;
+    z-index: 100000;
+    border: 3px solid var(--nav-second-color);
+    overflow: hidden;
+}
+
+#user_prompt_outline {
+    /* position: absolute; */
+    position: fixed;
+    /* width: clamp(300px, 80%, 1300px); */
+    width: 80%;
+    max-width: 1300px;
+    height: 45px;
+    background-color: var(--nav-third-color);
+    border-radius: 50px;
+    margin-left: -100px;
+    margin-left: 20px;
+    bottom: 10px;
+    right: 9%;
+    border: 3px solid var(--nav-second-color);
+}
+
+#user_prompt_wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    top: 87vh;
+    z-index: 1;
+}
+
+#input_field {
+    position: relative;
+    width: 100%;
+    /* background-color: green; */
+    display: flex;
+    height: 100%;
+}
+
+#input_field input {
+    width: 92%;
+    border: none;
+    outline: none;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    padding-left: 10px;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+#input_field input::placeholder {
+    opacity: 1;
+    transition: 0.2s;
+    color: var(--user-prompt-placeholder);
+    font-family: "Irish Grover", system-ui;
+}
+
+#input_field input:focus::placeholder {
+    opacity: 0;
+}
+
+#send_icon {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 8%;
+    /* background-color: red; */
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+#input_field img {
+    width: 25px;
+    /* margin-left: 5px; */
+}
+
+#user_prompt_wrapper::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background-image: linear-gradient(to top, var(--bg-color), transparent);
+    left: 0;
+    top: -38px;
+    z-index: 1;
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+#chat_area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* background-color: red; */
+    padding: 30px 0;
+}
+
+.user_message_wrapper {
+    /* background-color: green; */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    /* padding-right: 10%; */
+    padding: 20px 10% 20px 1%;
+    color: var(--text-color);
+    position: relative;
+}
+
+.user_message_pic {
+    position: relative;
+    height: 100%;
+}
+
+.user_message_pic img {
+    position: absolute;
+    top: -20px;
+    width: 40px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.499);
+}
+
+.user_message {
+    background-color: var(--front-name-color);
+    border-radius: 50px;
+}
+
+.user_message p {
+    padding: 10px;
+
+}
+
+
+
+.ai_message_wrapper {
+    /* background-color: green; */
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 20px 10% 20px 1%;
+    color: var(--text-color);
+}
+
+.ai_message {
+    padding: 10px;
+    background-color: var(--bottom-name-color);
+    border-radius: 50px;
+    margin-left: 40px;
+}
+
+.ai_message p {
+    padding: 10px;
+
+}
+
+.ai_message_pic {
+    position: relative;
+    height: 100%;
+}
+
+
+.ai_message_pic img {
+    position: absolute;
+    top: -20px;
+    width: 40px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.499);
+}
