@@ -64,6 +64,7 @@ def connect_to_station(device_port):
         port_thread = threading.Thread(target=check_is_port_connected,args=(device_port,PORT_CHECK_TIME_INTERVAL))
         port_thread.daemon = True
         port_thread.start()
+        print("Started port_checking daemon!")
         # print("The port is: {}".format(port))
         return port
     # except serial.SerialException:
@@ -73,11 +74,11 @@ def connect_to_station(device_port):
     
 
 def check_is_port_connected(device_port,time_interval):
-    print(device_port)
-    print(type(device_port))
+    # print(device_port)
+    # print(type(device_port))
     try:
         while True:
-            print(device_port)
+            # print(device_port)s
             available_ports = search_for_available_station_ports()
             if available_ports == False or device_port not in available_ports:
                 # print("Port disconnected!")
